@@ -4,7 +4,6 @@ module.exports = (plugin) => {
          password,
          resetPasswordToken,
          confirmationToken,
-
          ...sanitizedUser
       } = user // be careful, you need to omit other private attributes yourself
       return sanitizedUser
@@ -45,6 +44,20 @@ module.exports = (plugin) => {
       )
 
       ctx.body = sanitizeOutput(user)
+   }
+
+   plugin.controllers.user.update = async (ctx) => {
+      const { id } = ctx.params
+      const { request } = ctx
+
+      const user = await strapi.entityService.update(
+         'plugin::users-permissions.user',
+         id,
+         { data: request.body.data }
+      )
+
+      ctx.body = sanitizeOutput(user)
+      console.log(ctx.body)
    }
 
    return plugin
