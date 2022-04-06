@@ -22,14 +22,15 @@ module.exports = (plugin) => {
       ctx.body = sanitizeOutput(user)
    }
 
-   plugin.controllers.user.find = async (ctx) => {
-      const users = await strapi.entityService.findMany(
-         'plugin::users-permissions.user',
-         { ...ctx.params, populate: ['role'] }
-      )
+   // plugin.controllers.user.find = async (ctx) => {
+   //    console.log(ctx.params)
+   // const users = await strapi.entityService.findMany(
+   //    'plugin::users-permissions.user',
+   //    { ...ctx.params, populate: ['role'], filters: ctx.filters }
+   // )
 
-      ctx.body = users.map((user) => sanitizeOutput(user))
-   }
+   //    ctx.body = users.map((user) => sanitizeOutput(user))
+   // }
 
    plugin.controllers.user.findOne = async (ctx) => {
       if (!ctx.state.user) {
@@ -46,19 +47,13 @@ module.exports = (plugin) => {
       ctx.body = sanitizeOutput(user)
    }
 
-   plugin.controllers.user.update = async (ctx) => {
-      const { id } = ctx.params
-      const { request } = ctx
+   // plugin.controllers.user.update = async (ctx) => {
+   //    const { id } = ctx.params
+   //    const { request } = ctx
 
-      const user = await strapi.entityService.update(
-         'plugin::users-permissions.user',
-         id,
-         { data: request.body.data }
-      )
-
-      ctx.body = sanitizeOutput(user)
-      console.log(ctx.body)
-   }
+   //    ctx.body = sanitizeOutput(user)
+   //    console.log(ctx.body)
+   // }
 
    return plugin
 }
